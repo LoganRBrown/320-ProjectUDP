@@ -34,7 +34,7 @@ public class Buffer
             return _bytes;
         }
     }
-    
+
 
     public int Length
     {
@@ -56,12 +56,14 @@ public class Buffer
 
         byte[] newbytes = new byte[_bytes.Length + numOfBytes];
 
-        for(int i = 0; i < newbytes.Length; i++)
+        for (int i = 0; i < newbytes.Length; i++)
         {
-            if(i < _bytes.Length)
+            if (i < _bytes.Length)
             {
                 newbytes[i] = _bytes[i];
-            } else {
+            }
+            else
+            {
                 newbytes[i] = newdata[i - _bytes.Length];
             }
         }
@@ -88,18 +90,38 @@ public class Buffer
         }
 
         byte[] newbytes = new byte[newLength];
-        for(int i = 0; i < newbytes.Length; i++)
+        for (int i = 0; i < newbytes.Length; i++)
         {
             newbytes[i] = _bytes[i + numOfBytes];
         }
         _bytes = newbytes;
     }
 
+    public Buffer Slice(int offset, int length = -1)
+    {
+
+        if (offset < 0) offset = 0;
+        if (length < 0) length = _bytes.Length - offset;
+
+        if (offset + length >= _bytes.Length) return Buffer.Alloc(0);
+        if (length <= 0) return Buffer.Alloc(0);
+
+        byte[] newbytes = new byte[length];
+
+        int j = 0;
+        for (int i = 0; i < offset + length; i++)
+        {
+            newbytes[j++] = _bytes[i];
+        }
+        return Buffer.From(newbytes);
+
+    }
+
     public override string ToString()
     {
         StringBuilder sb = new StringBuilder("<Buffer");
 
-        foreach(byte b in _bytes)
+        foreach (byte b in _bytes)
         {
             sb.Append(" ");
             sb.Append(b.ToString("x2"));
@@ -121,7 +143,7 @@ public class Buffer
     {
         return ReadUInt8(offset);
     }
-    public byte ReadUInt8(int offset=0)
+    public byte ReadUInt8(int offset = 0)
     {
         if (offset < 0 || offset >= _bytes.Length) return 0;
         return _bytes[offset];
@@ -209,7 +231,7 @@ public class Buffer
     }
     public void WriteBytes(byte[] vals, int offset = 0)
     {
-        for(int i = 0; i < vals.Length; i++)
+        for (int i = 0; i < vals.Length; i++)
         {
             WriteByte(vals[i], offset + i);
         }
@@ -315,7 +337,7 @@ public class Buffer
     #endregion
 
     #region Write Floats
-    
+
     public void WriteSingleLE(float val, int offset = 0)
     {
         byte[] parts = BitConverter.GetBytes(val);
@@ -359,7 +381,7 @@ public class Buffer
         if (length <= 0) length = _bytes.Length;
 
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < length; i++)
+        for (int i = 0; i < length; i++)
         {
             if (i + offset >= _bytes.Length) break;
             sb.Append((char)ReadByte(i + offset));
@@ -391,7 +413,7 @@ public class Buffer
     #region Read Bools
     public bool ReadBool(int offset = 0)
     {
-        return ( ReadByte(offset) > 0 );
+        return (ReadByte(offset) > 0);
     }
     public bool[] ReadBitField(int offset = 0)
     {
@@ -416,7 +438,7 @@ public class Buffer
     #region Write Bools
     public void WriteBool(bool val, int offset = 0)
     {
-        byte b = (byte)( val ? 1 : 0 );
+        byte b = (byte)(val ? 1 : 0);
         WriteByte(b, offset);
     }
     public void WriteBitField(bool[] bits, int offset = 0)

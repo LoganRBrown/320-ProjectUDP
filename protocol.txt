@@ -1,16 +1,42 @@
-UDP Game Protocol
+Game Demo Protocol
 
-
-
-Packets from Client
+Packets from client
 ===================
 
-	O	L	Datatype	Desc
-	================================
+JOIN - Sent when joinging the game, this packet should "register the player".
 
-Packets from Server
+	0	L	Datatype	Desc
+	===============================
+	0	4	ascii		"JOIN"
+
+INPT - Current state of the client's input from the player
+
+	0	L	Datatype	Desc
+	===============================
+	0	4	ascii		"INPT"
+	4	1	int8		direction of horizontal input
+
+Packets from server
 ===================
 
+REPL - Sent when creating/updating/deleting game objects
 
 	O	L	Datatype	Desc
-	=================================
+	===============================
+	0	4	ascii		"REPL"
+	4	1	uint8		1/2/3 (create/update/delete)
+
+	5	1	uint8		how many objects?
+	6	4	ascii		class ID e.x. "PLYR"
+	10	??	serialize	???
+
+	?	1	uint8		how many objects?
+	?	4	ascii		class ID e.x. "PLYR"
+	?	??	serialize	???
+
+PAWN - Sent to client to indicate which pawn they control
+
+	O	L	Datatype	Desc
+	===============================
+	0	4	ascii		"PAWN"
+	4	1	uint8		NetworkID
