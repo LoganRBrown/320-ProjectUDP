@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Brick : NetworkObject
+public class GetClientInput : MonoBehaviour
 {
-    new public static string classID = "BRCK";
-
-    public int brickNumber = 0;
-
+    // Start is called before the first frame update
     void Start()
     {
         
@@ -16,6 +13,10 @@ public class Brick : NetworkObject
     // Update is called once per frame
     void Update()
     {
+
+        Buffer b = PacketBuilder.CurrentInput();
+
+        if (b != null) ClientUDP.singleton.SendPacket(b);
         
     }
 }

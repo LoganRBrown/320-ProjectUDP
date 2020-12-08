@@ -1,5 +1,6 @@
 const Pawn = require("./class-pawn.js").Pawn;
-const Game = require("./class-game.js").Game
+const Game = require("./class-game.js").Game;
+const Brick = require("./class-brick.js").Brick;
 
 
 exports.Client = class Client {
@@ -15,11 +16,7 @@ exports.Client = class Client {
 
 		this.pawn = null;
 		this.timeSinceLastPacket = Game.Singleton.time; // measured in seconds
-		this.bricks = [
-			[0,1,2,3,4,5,6,7,],
-			[8,9,10,11,12,13,14,15],
-			[16,17,18,19,20,21,22,23]
-		];
+		this.bricks = [];
 		this.clientNumber = 0; 
 
 	}
@@ -30,6 +27,16 @@ exports.Client = class Client {
 		this.pawn = new Pawn();
 		game.spawnObject( this.pawn );
 
+	}
+	spawnBricks(game){
+
+		if(this.bricks.length >= 24) return;
+
+		let brickClone = new Brick();
+		for (var i = 0; i <= 23; i++) {
+			game.spawnObject( this.brickClone );
+			this.bricks.push(brickClone);
+		}
 	}
 	update(game){
 

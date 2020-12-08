@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoardController : MonoBehaviour
+public class BoardController : NetworkObject
 {
+
+    new public static string classID = "BORD";
+
     public GameObject brick;
 
     public GameObject paddle;
@@ -17,7 +20,7 @@ public class BoardController : MonoBehaviour
     Vector3 brickSpawn = new Vector3((float)-8.25, 8, -10);
     void Start()
     {
-        CreateBricks();
+        //CreateBricks();
 
         if (whoseBoard != 0) SpawnPlayer();
     }

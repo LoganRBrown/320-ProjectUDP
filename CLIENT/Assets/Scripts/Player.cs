@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : NetworkObject
 {
+
+    new public static string classID = "PADL";
+
     public int playerNumber = 0;
     public float rightBoardEdge;
     public float leftBoardEdge;

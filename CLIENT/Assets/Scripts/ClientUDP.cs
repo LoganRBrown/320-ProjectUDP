@@ -23,6 +23,8 @@ public class ClientUDP : MonoBehaviour
 
 	public Transform paddle;
 
+	public int playerNumber = 1;
+
 	void Start()
 	{
 		if (singleton != null)
