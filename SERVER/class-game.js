@@ -11,12 +11,6 @@ exports.Game = class Game {
 
 		this.objs = []; // store NetworkObjects in here
 
-		this.ballPos = {
-			x: 0,
-			y: 0,
-			z: 0
-		};
-
 		this.server = server;
 		this.update();
 
@@ -106,5 +100,104 @@ exports.Game = class Game {
 		packet.writeUInt8(netID, 5);
 
 		this.server.SendPacketToAll(packet);
+	}
+	objectCollision(obj1, obj2){
+
+		let collisionHasHappened = false;
+
+		if(obj1.position.x < obj2.position.x + obj2.width && obj1.position.x + obj1.width > obj2.position.x && obj1.position.y < obj2.position.y + obj2.height && obj1.position.y + obj1.height > obj2.position.y){
+
+			collisionHasHappened = true;
+
+		}
+		if (collisionHasHappened){
+
+			switch(obj1.classID){
+				case 'BALL':
+
+					switch(obj2.classID){
+						case 'BRCK':
+
+							obj1.velocity.x = obj1.velocity.x * -1
+							obj1.velocity.y = obj1.velocity.y * -1
+							removeObject(obj2);
+
+							break;
+						case 'PAWN':
+
+							obj1.velocity.x = obj1.velocity.x * -1
+							obj1.velocity.y = obj1.velocity.y * -1
+
+							break;
+						case 'WALL':
+
+							obj1.velocity.x = obj1.velocity.x * -1
+							obj1.velocity.y = obj1.velocity.y * -1
+
+							break;
+						default:
+					
+							break;
+					}
+
+					break;
+				case 'BRCK':
+
+				switch(obj2.classID){
+						case 'BALL':
+							break;
+						case 'BRCK':
+							break;
+						case 'PAWN':
+							break;
+						case 'WALL':
+							break;
+						default:
+					
+							break;
+					}
+
+					break;
+				case 'PAWN':
+
+					switch(obj2.classID){
+						case 'BALL':
+							break;
+						case 'BRCK':
+							break;
+						case 'PAWN':
+							break;
+						case 'WALL':
+							break;
+						default:
+					
+							break;
+					}
+
+					break;
+				case 'WALL':
+
+					switch(obj2.classID){
+						case 'BALL':
+							break;
+						case 'BRCK':
+							break;
+						case 'PAWN':
+							break;
+						case 'WALL':
+							break;
+						default:
+					
+							break;
+					}
+
+					break;
+				default:
+
+					break
+			}
+
+		}
+
 	}
 }

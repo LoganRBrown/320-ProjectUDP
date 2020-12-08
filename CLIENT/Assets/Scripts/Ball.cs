@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ball : MonoBehaviour
+public class Ball : NetworkObject
 {
 
+    new public static string classID = "BALL";
 
+    Vector2 velocity = new Vector2();
 
     public Rigidbody2D rb;
     public Transform player1;
 
-    float velocity;
     bool inPlay = false;
     Vector3 paddleOffset = new Vector3(0, 1,0);
 
@@ -23,7 +24,7 @@ public class Ball : MonoBehaviour
     }
 
     
-    void Update()
+    void FixedUpdate()
     {
 
         if (!inPlay) transform.position = (player1.position + paddleOffset);
@@ -47,6 +48,16 @@ public class Ball : MonoBehaviour
 
         }
 
+    }
+
+    public override void Serialize()
+    {
+
+    }
+
+    public override int Deserialize(Buffer packet)
+    {
+        return base.Deserialize(packet);
     }
 
     /*public Buffer SendPacket()
