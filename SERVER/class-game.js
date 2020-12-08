@@ -141,23 +141,7 @@ exports.Game = class Game {
 					}
 
 					break;
-				case 'BRCK':
 
-				switch(obj2.classID){
-						case 'BALL':
-							break;
-						case 'BRCK':
-							break;
-						case 'PAWN':
-							break;
-						case 'WALL':
-							break;
-						default:
-					
-							break;
-					}
-
-					break;
 				case 'PAWN':
 
 					switch(obj2.classID){

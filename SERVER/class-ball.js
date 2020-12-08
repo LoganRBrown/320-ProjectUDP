@@ -12,7 +12,7 @@ exports.Ball = class Ball extends NetworkObject{
 	}
 	update(game){
 
-
+		this.position.x += this.velocity.x * game.dt;
 
 	}
 	serialize(){

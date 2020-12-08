@@ -8,6 +8,8 @@ exports.Pawn = class Pawn extends NetworkObject {
 		this.velocity = {x:0,y:0,z:0};
 
 		this.input = {};
+		this.width = 30;
+		this.height = 5;
 	}
 	accelerate(vel, acc, dt){
 		if(acc){
@@ -36,7 +38,7 @@ exports.Pawn = class Pawn extends NetworkObject {
 
 		let moveX = this.input.axisH|0; // -1, 0, or 1
 
-		this.velocity.x = this.accelerate(thi.velocity.x, movex, game.dt);
+		this.velocity.x = this.accelerate(this.velocity.x, movex, game.dt);
 
 		
 
