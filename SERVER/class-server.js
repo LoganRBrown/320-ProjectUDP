@@ -118,8 +118,11 @@ exports.Server = class Server{
 	}
 	update(game){
 		//check clients for disconnects, etc.
+
 		for(let key in this.clients){
 			this.clients[key].update(game);
+			this.clients[key].clientNumber = key;
+
 		}
 	}
 }

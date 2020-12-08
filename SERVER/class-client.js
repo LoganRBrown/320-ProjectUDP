@@ -17,7 +17,8 @@ exports.Client = class Client {
 		this.pawn = null;
 		this.timeSinceLastPacket = Game.Singleton.time; // measured in seconds
 		this.bricks = [];
-		this.clientNumber = 0; 
+		this.clientNumber = 0;
+		this.life = 24; 
 
 	}
 	spawnPawn(game){
@@ -46,6 +47,7 @@ exports.Client = class Client {
 			this.server.disconnectClient(this);
 
 		}
+		if(this.bricks.length > 0) this.life = this.bricks.length;
 	}
 	onPacket(packet, game){
 		if(packet.length < 4) return;

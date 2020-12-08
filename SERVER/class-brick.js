@@ -6,7 +6,7 @@ exports.Brick = class Brick extends NetworkObject{
 		super();
 		this.classID = "BRCK";
 		this.position = {x:0,y:0};
-		this.width = 10;
+		this.width = 20;
 		this.height = 10;
 	}
 	update(){
