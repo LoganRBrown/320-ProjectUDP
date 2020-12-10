@@ -6,7 +6,7 @@ exports.Ball = class Ball extends NetworkObject{
 		super();
 		this.classID = "BALL";
 		this.position = {x:0,y:0};
-		this.velocity = {x:0,y:0};
+		this.velocity = {x:-1,y:-2};
 		this.width = 10;
 		this.height = 10;
 	}

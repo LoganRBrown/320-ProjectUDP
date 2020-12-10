@@ -96,6 +96,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad8e01ba93cb5c7419b6d5240076039f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  networkID: 0
+  classID: NWOB
+  brickNumber: 0
 --- !u!61 &1069656652037993049
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -103,7 +106,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3730030090071950824}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0

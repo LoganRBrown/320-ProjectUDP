@@ -24,9 +24,15 @@ exports.Game = class Game {
 
 		const player = this.server.getPlayer(0);
 
+		const ball = this.objs.find(obj => { return obj.classID === "BALL" });
+		const pawn = this.objs.find(obj => { return obj.classID === "PAWN" });
+
 		for(var i in this.objs){
 			this.objs[i].update(this);
+			objectCollision(ball, objs[i]);
+			objectCollision(pawn, objs[i]);
 		}
+
 
 		if(player){
 
@@ -117,23 +123,16 @@ exports.Game = class Game {
 
 					switch(obj2.classID){
 						case 'BRCK':
-
-							obj1.velocity.x = obj1.velocity.x * -1
 							obj1.velocity.y = obj1.velocity.y * -1
 							removeObject(obj2);
-
 							break;
 						case 'PAWN':
-
-							obj1.velocity.x = obj1.velocity.x * -1
+							//obj1.velocity.x = obj1.velocity.x * -1
 							obj1.velocity.y = obj1.velocity.y * -1
-
 							break;
 						case 'WALL':
-
-							obj1.velocity.x = obj1.velocity.x * -1
+							//obj1.velocity.x = obj1.velocity.x * -1
 							obj1.velocity.y = obj1.velocity.y * -1
-
 							break;
 						default:
 					
@@ -145,30 +144,8 @@ exports.Game = class Game {
 				case 'PAWN':
 
 					switch(obj2.classID){
-						case 'BALL':
-							break;
-						case 'BRCK':
-							break;
-						case 'PAWN':
-							break;
 						case 'WALL':
-							break;
-						default:
-					
-							break;
-					}
-
-					break;
-				case 'WALL':
-
-					switch(obj2.classID){
-						case 'BALL':
-							break;
-						case 'BRCK':
-							break;
-						case 'PAWN':
-							break;
-						case 'WALL':
+							obj1.velocity.y = 0;
 							break;
 						default:
 					
@@ -183,5 +160,11 @@ exports.Game = class Game {
 
 		}
 
+	}
+	populateGame(){
+		for(var i in server.clients){
+			clients[i].spawnPawn(this);
+			clients[i].spawnBricks(this);
+		}
 	}
 }

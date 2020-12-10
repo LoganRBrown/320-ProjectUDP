@@ -42,7 +42,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3525918150777686778}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -68,7 +68,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3525918150777686778}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -94,7 +94,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3525918150777686778}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -120,7 +120,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3525918150777686778}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -151,6 +151,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ba9222827695cb46bfe10ef6a60c8c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  networkID: 0
+  classID: NWOB
   brick: {fileID: 3730030090071950824, guid: 5d13bf2df37c4404f8e92b688227f1fe, type: 3}
   paddle: {fileID: 7007553355817198499, guid: f15e040ae63c3424da7842d630d9e2e7, type: 3}
   ball: {fileID: 7665697759130197601, guid: 210d847f87ac4b34189f46a786704a44, type: 3}
+  whoseBoard: 0

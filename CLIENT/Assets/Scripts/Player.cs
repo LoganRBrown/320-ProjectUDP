@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : NetworkObject
 {
 
-    new public static string classID = "PADL";
+    new public static string classID = "PAWN";
 
     public int playerNumber = 0;
     public float rightBoardEdge;
