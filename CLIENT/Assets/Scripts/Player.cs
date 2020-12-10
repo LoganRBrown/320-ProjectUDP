@@ -7,7 +7,7 @@ public class Player : NetworkObject
 
     new public static string classID = "PAWN";
 
-    public int playerNumber = 0;
+    public bool canPlayerControl = false;
     public float rightBoardEdge;
     public float leftBoardEdge;
 

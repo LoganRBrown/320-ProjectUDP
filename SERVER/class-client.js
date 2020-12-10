@@ -39,7 +39,7 @@ exports.Client = class Client {
 			this.bricks.push(brickClone);
 		}
 	}
-	update(game){
+	update(){
 
 		const game = Game.Singleton;
 

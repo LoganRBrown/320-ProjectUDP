@@ -87,7 +87,7 @@ public class BoardController : NetworkObject
 
         Player playerScript = player.GetComponent<Player>();
 
-        playerScript.playerNumber = whoseBoard;
+        //playerScript.playerNumber = whoseBoard;
 
 
     }

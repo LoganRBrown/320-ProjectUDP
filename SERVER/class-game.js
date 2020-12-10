@@ -44,13 +44,13 @@ exports.Game = class Game {
 		}
 		else{
 			this.timeUntilNextStatePacket = .1; // send 10% packets (~1/6 frames)
-			this.sendBallPos();
+			this.sendWorldState();
 		}
 
 		setTimeout(()=>this.update(), 16);
 	}
 	sendWorldState(){
-		const packet = makeREPL(true);
+		const packet = this.makeREPL(true);
 		this.server.SendPacketToAll(packet);
 	}
 	makeREPL(isUpdate){

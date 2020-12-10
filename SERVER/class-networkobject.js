@@ -7,9 +7,9 @@ exports.NetworkObject = class NetworkObject {
 		thic.classID = "NWOB";
 		this.networkID = ++NetworkObject._idCount;
 
-		this.position = (x:0,y:0,z:0);
-		this.rotation = (x:0,y:0,z:0);
-		this.scale 	  = (x:1,y:1,z:1);
+		this.position = {x:0,y:0,z:0};
+		this.rotation = {x:0,y:0,z:0};
+		this.scale 	  = {x:1,y:1,z:1};
 	}
 	update(game){
 
