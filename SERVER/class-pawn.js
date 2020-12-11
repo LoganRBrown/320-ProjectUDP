@@ -4,6 +4,7 @@ exports.Pawn = class Pawn extends NetworkObject {
 	constructor(){
 		super();
 		this.classID = "PAWN";
+		this.belongsToPlayer = 0;
 
 		this.velocity = {x:0,y:0,z:0};
 
@@ -38,7 +39,7 @@ exports.Pawn = class Pawn extends NetworkObject {
 
 		let moveX = this.input.axisH|0; // -1, 0, or 1
 
-		this.velocity.x = this.accelerate(this.velocity.x, movex, game.dt);
+		this.velocity.x = this.accelerate(this.velocity.x, moveX, game.dt);
 
 		
 

@@ -4,7 +4,7 @@ exports.NetworkObject = class NetworkObject {
 
 	constructor(){
 
-		thic.classID = "NWOB";
+		this.classID = "NWOB";
 		this.networkID = ++NetworkObject._idCount;
 
 		this.position = {x:0,y:0,z:0};

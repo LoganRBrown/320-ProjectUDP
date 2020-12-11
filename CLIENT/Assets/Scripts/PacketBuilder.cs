@@ -22,4 +22,35 @@ public static class PacketBuilder
 
         return b;
     }
+
+    public static Buffer Chat(string message)
+    {
+        int packetLength = 5 + message.Length;
+        Buffer packet = Buffer.Alloc(packetLength);
+
+        packet.WriteString("CHAT");
+        packet.WriteUInt8((byte)message.Length, 4);
+        packet.WriteString(message, 5);
+
+        return packet;
+    }
+
+    public static Buffer Username(string username)
+    {
+        int packetLength = 5 + username.Length;
+        Buffer packet = Buffer.Alloc(packetLength);
+
+        packet.WriteString("USRN");
+        packet.WriteUInt8((byte)username.Length, 4);
+        packet.WriteString(username);
+
+        return packet;
+    }
+
+    public static Buffer Ready()
+    {
+        Buffer packet = Buffer.Alloc(5);
+
+        return packet;
+    }
 }

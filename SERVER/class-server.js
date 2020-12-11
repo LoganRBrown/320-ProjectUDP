@@ -56,6 +56,7 @@ exports.Server = class Server{
 		const key = this.getKeyFromRinfo(rinfo);
 		const client = new Client(rinfo);
 		this.clients[key] = client;
+		this.client.clientNumber = this.clients.indexOf(client);
 
 		//depending on scene (and other conditions) spawn pawn:
 		client.spawnPawn(this.game);
@@ -121,7 +122,7 @@ exports.Server = class Server{
 
 		for(let key in this.clients){
 			this.clients[key].update(game);
-			this.clients[key].clientNumber = key;
+			//this.clients[key].clientNumber = key;
 
 		}
 	}

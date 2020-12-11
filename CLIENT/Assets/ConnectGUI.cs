@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ConnectGUI : MonoBehaviour
@@ -8,6 +9,8 @@ public class ConnectGUI : MonoBehaviour
 
     public InputField inputIP;
     public InputField inputPort;
+    public GameObject connectionScreen;
+    public GameObject readyScreen;
 
     public ServerRowGUI prefabServerRowGUI;
 
@@ -28,6 +31,8 @@ public class ConnectGUI : MonoBehaviour
         System.UInt16.TryParse(port, out portNum);
 
         ClientUDP.singleton.ConnectToServer(addr, portNum);
+
+        SceneManager.LoadScene("play", LoadSceneMode.Single);
 
     }
 
@@ -70,6 +75,7 @@ public class ConnectGUI : MonoBehaviour
             rt.anchoredPosition = new Vector2(0, - i * 70);
 
             row.Init(server);
+            row.transform.SetParent(connectionScreen.transform);
             rows.Add(row);
             i++;
         }

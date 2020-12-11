@@ -5,6 +5,7 @@ exports.Ball = class Ball extends NetworkObject{
 	constructor(){
 		super();
 		this.classID = "BALL";
+		this.belongsToPlayer = 0;
 		this.position = {x:0,y:0};
 		this.velocity = {x:-1,y:-2};
 		this.width = 10;
@@ -13,6 +14,7 @@ exports.Ball = class Ball extends NetworkObject{
 	update(game){
 
 		this.position.x += this.velocity.x * game.dt;
+		this.position.y += this.velocity.y * game.dt;
 
 	}
 	serialize(){

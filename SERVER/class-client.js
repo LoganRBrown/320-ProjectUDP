@@ -16,7 +16,7 @@ exports.Client = class Client {
 
 		this.pawn = null;
 		this.timeSinceLastPacket = Game.Singleton.time; // measured in seconds
-		this.bricks = [];
+		this.points = 0;
 		this.clientNumber = 0;
 		this.life = 24; 
 
@@ -26,19 +26,12 @@ exports.Client = class Client {
 		if(this.pawn) return;
 
 		this.pawn = new Pawn();
+		this.pawn.belongsToPlayer = this.clientNumber;
 		game.spawnObject( this.pawn );
+		console.log("Paddle Should Spawn Now");
 
 	}
-	spawnBricks(game){
-
-		if(this.bricks.length >= 24) return;
-
-		let brickClone = new Brick();
-		for (var i = 0; i <= 23; i++) {
-			game.spawnObject( this.brickClone );
-			this.bricks.push(brickClone);
-		}
-	}
+	
 	update(){
 
 		const game = Game.Singleton;

@@ -29,6 +29,8 @@ public class ClientUDP : MonoBehaviour
 
 	public Transform paddle;
 
+	public ChatScreenController chatWindow;
+
 	void Start()
 	{
 		if (singleton != null)
@@ -56,6 +58,17 @@ public class ClientUDP : MonoBehaviour
 		// send a packet to the server (async)
 		SendPacket(Buffer.From("JOIN"));
 	}
+
+	public void DisconnectFromServer()
+	{
+		if (sockSending != null) sockSending.Close();
+		if (sockReceive != null)
+		{
+			print("closing socket");
+			sockReceive.Close();
+		}
+	}
+
 
 	/// <summary>
 	/// This function listens for packets from the server
@@ -123,6 +136,27 @@ public class ClientUDP : MonoBehaviour
 				string name = packet.ReadString(7, nameLength);
 
 				AddToServerList(new RemoteServer(res.RemoteEndPoint, name));
+
+				break;
+			case "CHAT":
+
+				byte usernameLength = packet.ReadByte(4);
+
+				ushort messageLength = packet.ReadUInt8(5);
+
+				int fullPacketLength = 7 + usernameLength + messageLength;
+
+				if (packet.Length < fullPacketLength) return;
+
+				string username = packet.ReadString(7, usernameLength);
+
+				string message = packet.ReadString(7 + usernameLength, messageLength);
+
+				// TODO: Update Chat View
+
+				chatWindow.AddMessageToChatDisplay($"{username}: {message}");
+
+				packet.Consume(fullPacketLength);
 
 				break;
 		}
