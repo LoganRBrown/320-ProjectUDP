@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ChatScreenController : MonoBehaviour
 {
@@ -36,6 +37,11 @@ public class ChatScreenController : MonoBehaviour
         this.gameObject.SetActive(false);
 
         client.SendPacket(packet);
+    }
+
+    public void TimeToPlay()
+    {
+        SceneManager.LoadScene("play", LoadSceneMode.Single);
     }
 
     public void AddMessageToChatDisplay(string txt)

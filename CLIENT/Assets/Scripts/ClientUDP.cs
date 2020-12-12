@@ -159,6 +159,11 @@ public class ClientUDP : MonoBehaviour
 				packet.Consume(fullPacketLength);
 
 				break;
+			case "PLAY":
+
+				chatWindow.TimeToPlay();
+
+				break;
 		}
 	}
 
@@ -206,6 +211,7 @@ public class ClientUDP : MonoBehaviour
 					offset += obj.Deserialize(chunk);
 
 					NetworkObject.AddObject(obj);
+					print("fire");
 					break;
 				case 2: // update
 

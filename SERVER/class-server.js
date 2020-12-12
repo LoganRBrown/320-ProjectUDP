@@ -5,6 +5,7 @@ exports.Server = class Server{
 	constructor(){
 
 		this.clients = [];
+		this.readyCount = 0;
 
 		//create socket:
 		this.sock = require("dgram").createSocket("udp4");
@@ -39,6 +40,10 @@ exports.Server = class Server{
 		else{
 			if (packetID == "JOIN") {
 				this.makeClient(rinfo);
+			}
+			if (packetID == "REDY"){
+				const temp = this.lookupClient(rinfo);
+				temp.isReady = true;
 			}
 		}
 		
@@ -122,7 +127,14 @@ exports.Server = class Server{
 
 		for(let key in this.clients){
 			this.clients[key].update(game);
-			//this.clients[key].clientNumber = key;
+			if(this.clients[key].isReady == true){
+				this.readyCount++;
+				if(this.readyCount >= 2){
+					const packet = Buffer.alloc(4);
+					packet.write("PLAY", 0);
+					SendPacketToAll(packet);
+				}
+			}
 
 		}
 	}

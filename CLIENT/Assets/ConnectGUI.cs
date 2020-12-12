@@ -32,7 +32,10 @@ public class ConnectGUI : MonoBehaviour
 
         ClientUDP.singleton.ConnectToServer(addr, portNum);
 
-        SceneManager.LoadScene("play", LoadSceneMode.Single);
+        readyScreen.SetActive(true);
+        connectionScreen.SetActive(false);
+
+        //SceneManager.LoadScene("play", LoadSceneMode.Single);
 
     }
 

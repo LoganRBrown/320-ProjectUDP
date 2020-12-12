@@ -51,6 +51,9 @@ public static class PacketBuilder
     {
         Buffer packet = Buffer.Alloc(5);
 
+        packet.WriteString("REDY");
+        packet.WriteUInt8(1, 4);
+
         return packet;
     }
 }
