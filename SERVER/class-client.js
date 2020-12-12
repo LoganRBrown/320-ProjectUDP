@@ -18,7 +18,9 @@ exports.Client = class Client {
 		this.timeSinceLastPacket = Game.Singleton.time; // measured in seconds
 		this.points = 0;
 		this.clientNumber = 0;
-		this.life = 24; 
+		this.life = 24;
+		this.isReady = false;
+		this.username = ""; 
 
 	}
 	spawnPawn(game){

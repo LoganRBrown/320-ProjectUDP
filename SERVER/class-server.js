@@ -42,11 +42,38 @@ exports.Server = class Server{
 				this.makeClient(rinfo);
 			}
 			if (packetID == "REDY"){
-				const temp = this.lookupClient(rinfo);
-				temp.isReady = true;
+				c.isReady = true;
+			}
+			if (packetID == "USRN"){
+				const nameLength = msg.slice(4,5);
+				c.username = msg.slice(5, nameLength).toString();
+			}
+			if(packetID == "CHAT"){
+				this.sendChatToClients(msg, c);
 			}
 		}
 		
+	}
+	sendChatToClients(msg, client){
+		if(msg.length < 5) return;
+
+		const msgLength = msg.slice(4,5);
+		const chatMsg = msg.slice(5, msgLength).toString();
+		const clientNameLength = client.username.length;
+		const clientName = client.username;
+
+		let packLength = msgLength += clientNameLength;
+
+		const packet = Buffer.alloc(5 + packLength)
+		packet.write("CHAT",0);
+		packet.writeUInt8(clientNameLength,4);
+		packet.writeUInt16BE(msgLength, 5);
+		packet.write(clientName, 7);
+		packet.write(chatMsg, 7 + clientNameLength);
+
+		this.SendPacketToAll(packet);
+
+
 	}
 	getKeyFromRinfo(rinfo){
 		return rinfo.address+":"+rinfo.port;

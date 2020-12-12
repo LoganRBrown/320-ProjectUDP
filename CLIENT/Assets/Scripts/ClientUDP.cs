@@ -142,7 +142,7 @@ public class ClientUDP : MonoBehaviour
 
 				byte usernameLength = packet.ReadByte(4);
 
-				ushort messageLength = packet.ReadUInt8(5);
+				ushort messageLength = packet.ReadUInt16BE(5);
 
 				int fullPacketLength = 7 + usernameLength + messageLength;
 
