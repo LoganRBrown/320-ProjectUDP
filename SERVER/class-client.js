@@ -18,7 +18,6 @@ exports.Client = class Client {
 		this.timeSinceLastPacket = Game.Singleton.time; // measured in seconds
 		this.points = 0;
 		this.clientNumber = 0;
-		this.life = 24;
 		this.isReady = false;
 		this.username = ""; 
 
@@ -42,7 +41,7 @@ exports.Client = class Client {
 			this.server.disconnectClient(this);
 
 		}
-		if(this.bricks.length > 0) this.life = this.bricks.length;
+		
 	}
 	onPacket(packet, game){
 		if(packet.length < 4) return;

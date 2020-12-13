@@ -10,37 +10,42 @@ public class ChatScreenController : MonoBehaviour
 
     public TextMeshProUGUI chatWindow;
     public TMP_InputField inputChat;
-    public TMP_InputField inputUsername; 
+    public TMP_InputField inputUsername;
 
     Buffer buffer = Buffer.Alloc(0);
 
-    public ClientUDP client;
+    public ConnectGUI parent;
 
     public void CreateUsername(string txt)
     {
         if (!new Regex(@"^(\s|\t)*$").IsMatch(txt))
         {
-            client.SendPacket(PacketBuilder.Username(txt));
+            ClientUDP.singleton.SendPacket(PacketBuilder.Username(txt));
             inputUsername.text = "";
         }
     }
 
     public void OnButtonDisconnect()
     {
-        client.DisconnectFromServer();
+        ClientUDP.singleton.DisconnectFromServer();
+
+        this.gameObject.SetActive(false);
+
+        parent.connectionScreen.SetActive(true);
+
     }
 
     public void OnButtonReady()
     {
         Buffer packet = PacketBuilder.Ready();
 
-        this.gameObject.SetActive(false);
-
-        client.SendPacket(packet);
+        ClientUDP.singleton.SendPacket(packet);
     }
 
     public void TimeToPlay()
     {
+        this.gameObject.SetActive(false);
+
         SceneManager.LoadScene("play", LoadSceneMode.Single);
     }
 
@@ -53,12 +58,12 @@ public class ChatScreenController : MonoBehaviour
     {
         if (!new Regex(@"^(\s|\t)*$").IsMatch(txt))
         {
-            client.SendPacket(PacketBuilder.Chat(txt));
+            ClientUDP.singleton.SendPacket(PacketBuilder.Chat(txt));
             inputChat.text = "";
         }
 
-        inputChat.Select();
-        inputChat.ActivateInputField();
+        //inputChat.Select();
+        //inputChat.ActivateInputField();
     }
 
 }

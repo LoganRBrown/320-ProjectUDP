@@ -28,7 +28,7 @@ public static class PacketBuilder
         int packetLength = 5 + message.Length;
         Buffer packet = Buffer.Alloc(packetLength);
 
-        packet.WriteString("CHAT");
+        packet.WriteString("CHAT", 0);
         packet.WriteUInt8((byte)message.Length, 4);
         packet.WriteString(message, 5);
 
@@ -40,7 +40,7 @@ public static class PacketBuilder
         int packetLength = 5 + username.Length;
         Buffer packet = Buffer.Alloc(packetLength);
 
-        packet.WriteString("USRN");
+        packet.WriteString("USRN", 0);
         packet.WriteUInt8((byte)username.Length, 4);
         packet.WriteString(username);
 
@@ -51,7 +51,7 @@ public static class PacketBuilder
     {
         Buffer packet = Buffer.Alloc(5);
 
-        packet.WriteString("REDY");
+        packet.WriteString("REDY", 0);
         packet.WriteUInt8(1, 4);
 
         return packet;
