@@ -19,7 +19,7 @@ exports.Client = class Client {
 		this.points = 0;
 		this.clientNumber = 0;
 		this.isReady = false;
-		this.username = ""; 
+		this.username = "Default"; 
 
 	}
 	spawnPawn(game){
@@ -38,7 +38,7 @@ exports.Client = class Client {
 		const game = Game.Singleton;
 
 		if(game.time > this.timeSinceLastPacket + Client.TIMEOUT){
-			this.server.disconnectClient(this);
+			game.server.disconnectClient(this);
 
 		}
 		
@@ -59,10 +59,27 @@ exports.Client = class Client {
 				if(this.pawn) this.pawn.input = this.input;
 
 				break;
+			case("REDY"):
+
+				this.isReady = true;
+
+				break;
+			case("USRN"):
+
+				const nameLength = packet.readUInt8(4);
+				this.username = packet.slice(5, 5+nameLength).toString();
+
+				break;
+			case("CHAT"):
+
+				game.server.sendChatToClients(packet, this);
+
+				break;
 
 
 			default:
 				console.log("ERROR: Packet not recognized");
+				console.log(packetID);
 		}
 	}
 

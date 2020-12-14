@@ -6,6 +6,7 @@ exports.Server = class Server{
 
 		this.clients = [];
 		this.readyCount = 0;
+		this.serverName = "Logan's Server";
 
 		//create socket:
 		this.sock = require("dgram").createSocket("udp4");
@@ -19,6 +20,7 @@ exports.Server = class Server{
 
 		// bind socket to port: (Start Listening)
 		this.port = 320;
+		this.timeUntilNextBroadcast = 0;
 		this.sock.bind(this.port);
 	}
 	onError(e){
@@ -41,28 +43,19 @@ exports.Server = class Server{
 			if (packetID == "JOIN") {
 				this.makeClient(rinfo);
 			}
-			if (packetID == "REDY"){
-				c.isReady = true;
-			}
-			if (packetID == "USRN"){
-				const nameLength = msg.slice(4,5);
-				c.username = msg.slice(5, nameLength).toString();
-			}
-			if(packetID == "CHAT"){
-				this.sendChatToClients(msg, c);
-			}
 		}
 		
 	}
 	sendChatToClients(msg, client){
 		if(msg.length < 5) return;
 
-		const msgLength = msg.slice(4,5);
-		const chatMsg = msg.slice(5, msgLength).toString();
+		const msgLength = msg.readUInt8(4);
+		const chatMsg = msg.slice(5, 5+msgLength).toString();
 		const clientNameLength = client.username.length;
 		const clientName = client.username;
 
-		let packLength = msgLength += clientNameLength;
+		let packLength = Number(msgLength + clientNameLength);
+
 
 		const packet = Buffer.alloc(5 + packLength)
 		packet.write("CHAT",0);
@@ -72,6 +65,8 @@ exports.Server = class Server{
 		packet.write(chatMsg, 7 + clientNameLength);
 
 		this.SendPacketToAll(packet);
+
+		console.log("Packet sent");
 
 
 	}
@@ -136,18 +131,33 @@ exports.Server = class Server{
 		}
 	}
 	SendPacketToAll(packet){
-		/*this.clients.forEach(c=>{
-
-			this.sendPacketToClient(packet, c);
-
-		});*/
 
 		for(var key in this.clients){
 			this.sendPacketToClient(packet, this.clients[key]);
+			//console.log("Packet sent to all");
 		}
 	}
 	sendPacketToClient(packet, client){
-		this.sock.send(packet,0,packet.length,client.rinfo.port, client.rinfo.address, ()=>{});
+		this.sock.send(packet,0,packet.length,321, client.rinfo.address, ()=>{});
+	}
+	broadcastPacket(packet){
+
+		const clientListenPort = 321;
+
+		this.sock.send(packet, 0, packet.length, clientListenPort, undefined);
+
+	}
+	broadcastServerHost(){
+
+		const nameLength = Number(this.serverName.length);
+		const packet = Buffer.alloc(7 + nameLength);
+
+		packet.write("HOST", 0);
+		packet.writeUInt16BE(this.port, 4);
+		packet.writeUInt8(nameLength, 6);
+		packet.write(this.serverName, 7);
+
+		this.broadcastPacket(packet);
 	}
 	update(game){
 		//check clients for disconnects, etc.
@@ -159,10 +169,17 @@ exports.Server = class Server{
 				if(this.readyCount >= 2){
 					const packet = Buffer.alloc(4);
 					packet.write("PLAY", 0);
-					SendPacketToAll(packet);
+					this.SendPacketToAll(packet);
 				}
 			}
 
+		}
+
+		this.timeUntilNextBroadcast -= game.dt;
+		if(this.timeUntilNextBroadcast <= 0){
+			this.timeUntilNextBroadcast = 1.5
+
+			this.broadcastServerHost();
 		}
 	}
 }

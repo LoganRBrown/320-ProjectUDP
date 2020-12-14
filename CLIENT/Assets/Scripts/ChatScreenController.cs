@@ -18,11 +18,8 @@ public class ChatScreenController : MonoBehaviour
 
     public void CreateUsername(string txt)
     {
-        if (!new Regex(@"^(\s|\t)*$").IsMatch(txt))
-        {
             ClientUDP.singleton.SendPacket(PacketBuilder.Username(txt));
             inputUsername.text = "";
-        }
     }
 
     public void OnButtonDisconnect()

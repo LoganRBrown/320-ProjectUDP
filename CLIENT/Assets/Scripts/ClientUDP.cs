@@ -14,7 +14,7 @@ public class ClientUDP : MonoBehaviour
 	}
 
 	static UdpClient sockSending = new UdpClient();
-	static UdpClient sockReceive = new UdpClient();
+	static UdpClient sockReceive = new UdpClient(321);
 
 	public List<RemoteServer> availableGameServers = new List<RemoteServer>();
 
@@ -140,13 +140,12 @@ public class ClientUDP : MonoBehaviour
 				break;
 			case "CHAT":
 
-				byte usernameLength = packet.ReadByte(4);
+
+				int usernameLength = packet.ReadUInt8(4);
 
 				ushort messageLength = packet.ReadUInt16BE(5);
 
 				int fullPacketLength = 7 + usernameLength + messageLength;
-
-				if (packet.Length < fullPacketLength) return;
 
 				string username = packet.ReadString(7, usernameLength);
 
@@ -156,13 +155,16 @@ public class ClientUDP : MonoBehaviour
 
 				chatWindow.AddMessageToChatDisplay($"{username}: {message}");
 
-				packet.Consume(fullPacketLength);
+				//packet.Consume(fullPacketLength);
 
 				break;
 			case "PLAY":
 
 				chatWindow.TimeToPlay();
 
+				break;
+			default:
+				print("Packet not recognized");
 				break;
 		}
 	}

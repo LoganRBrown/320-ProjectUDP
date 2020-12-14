@@ -14,19 +14,20 @@ public class ConnectGUI : MonoBehaviour
 
     public ServerRowGUI prefabServerRowGUI;
 
-    float timeUntilrefresh = 0;
+    float timeUntilrefresh = 1;
 
     List<ServerRowGUI> rows = new List<ServerRowGUI>();
 
     public void DirectConnect()
     {
 
+        if (inputIP == null) return;
+        if (inputPort == null) return;
+
         string addr = inputIP.text;
         string port = inputPort.text;
 
         ushort portNum = 0;
-
-        
 
         System.UInt16.TryParse(port, out portNum);
 
@@ -77,7 +78,7 @@ public class ConnectGUI : MonoBehaviour
 
             rt.anchoredPosition = new Vector2(0, - i * 70);
 
-            row.Init(server);
+            row.Init(server, this);
             row.transform.SetParent(connectionScreen.transform);
             rows.Add(row);
             i++;

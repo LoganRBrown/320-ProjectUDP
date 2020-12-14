@@ -10,15 +10,17 @@ public class ServerRowGUI : MonoBehaviour
     public Button bttn;
 
     private RemoteServer server;
+
+    public ConnectGUI parent;
    
-    public void Init(RemoteServer server)
+    public void Init(RemoteServer server, ConnectGUI connectGUI)
     {
 
         this.server = server;
 
         txtServerName.text = server.serverName;
 
-
+        parent = connectGUI;
 
     }
     public void ClickedTheButton()
@@ -26,6 +28,8 @@ public class ServerRowGUI : MonoBehaviour
 
         ClientUDP.singleton.ConnectToServer(server.endPoint.Address.ToString(), (ushort)server.endPoint.Port);
 
+        parent.connectionScreen.SetActive(false);
+        parent.readyScreen.SetActive(true);
     }
 
 }

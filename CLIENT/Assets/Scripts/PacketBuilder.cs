@@ -37,12 +37,13 @@ public static class PacketBuilder
 
     public static Buffer Username(string username)
     {
+        Debug.Log("username sent");
         int packetLength = 5 + username.Length;
         Buffer packet = Buffer.Alloc(packetLength);
 
         packet.WriteString("USRN", 0);
         packet.WriteUInt8((byte)username.Length, 4);
-        packet.WriteString(username);
+        packet.WriteString(username, 5);
 
         return packet;
     }
