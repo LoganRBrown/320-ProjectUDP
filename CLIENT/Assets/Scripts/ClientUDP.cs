@@ -185,11 +185,11 @@ public class ClientUDP : MonoBehaviour
 
 		int replType = packet.ReadUInt8(4);
 
-		if (replType != 1 && replType != 2 && replType != 3) return;
-
 		int offset = 5;
 
-		while (offset < packet.Length)
+		if (replType != 1 && replType != 2 && replType != 3) return;
+
+		while (offset <= packet.Length)
 		{
 			int networkID = 0;
 
@@ -213,7 +213,7 @@ public class ClientUDP : MonoBehaviour
 						case ("PAWN"):
 
 							obj.gameObject.transform.localScale = new Vector3(20,5,1);
-							//obj.gameObject.transform.localPosition = new Vector3(0, -500, 0);
+							//obj.gameObject.transform.localPosition = new Vector3(0, -50, 0);
 
 							break;
 
@@ -222,8 +222,8 @@ public class ClientUDP : MonoBehaviour
 					if (obj == null) return; //ERROR: class ID not Found!
 
 					offset += 4; // trim out classID off beginning of packet data
-					Buffer chunk = packet.Slice(offset);
-					offset += obj.Deserialize(chunk);
+					Debug.Log(packet.ReadSingleBE(14));
+					offset += obj.Deserialize(packet);
 
 					NetworkObject.AddObject(obj);
 					break;

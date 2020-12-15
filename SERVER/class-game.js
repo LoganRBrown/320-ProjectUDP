@@ -70,20 +70,27 @@ exports.Game = class Game {
 		const offsetY = 1;
 		const offsetX = 2;
 
-		if(this.bricks.length >= 29) return;
+		if(this.bricks.length >= 30) return;
 
 		let brickClone = new Brick();
-		for (var i = 1; i <= 30; i++) {
-			var bc = this.brickClone;
+		for (var i = 0; i <= 29; i++) {
 
-			bc.position = {x:50,y:480,z:0};
+			brickClone.position = {x:50,y:480,z:0};
 
-			if(i >= 1){
-				bc.position = {x:50,y:480,z:0};
-				bc.position += {x:offsetX * i, y:offsetY * i, z: 0};
+			if(i <= 9){
+				brickClone.position = {x:50,y:480,z:0};
+				brickClone.position += {x:offsetX * i, y: 0, z: 0};
+			}
+			if(i >= 9 && i <= 19){
+				brickClone.position = {x:50,y:460,z:0};
+				brickClone.position += {x:offsetX * (i-9), y: 0, z: 0};
+			}
+			if(i >= 19 && i <= 29){
+				brickClone.position = {x:50,y:440,z:0};
+				brickClone.position += {x:offsetX * (i - 19), y: 0, z: 0};
 			}
 
-			this.spawnObject(bc);
+			this.spawnObject(brickClone);
 			this.bricks.push(brickClone);
 		}
 	}

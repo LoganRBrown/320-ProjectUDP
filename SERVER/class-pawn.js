@@ -3,6 +3,7 @@ const NetworkObject = require("./class-networkobject.js").NetworkObject;
 exports.Pawn = class Pawn extends NetworkObject {
 	constructor(){
 		super();
+
 		this.classID = "PAWN";
 		this.belongsToPlayer = 0;
 
@@ -11,7 +12,7 @@ exports.Pawn = class Pawn extends NetworkObject {
 		this.input = {};
 		this.width = 30;
 		this.height = 5;
-		this.position.y = -500;
+		this.position.y = -50;
 	}
 	accelerate(vel, acc, dt){
 		if(acc){
@@ -46,10 +47,17 @@ exports.Pawn = class Pawn extends NetworkObject {
 
 		this.position.x += this.velocity.x * game.dt;
 
+		
+		//console.log(this.position);
+
 	}
 	serialize(){
 
+		//console.log(super.position);
+
 		let b = super.serialize();
+
+		console.log(b);
 
 		return b;
 	}

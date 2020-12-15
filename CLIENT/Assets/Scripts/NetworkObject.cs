@@ -34,6 +34,9 @@ public class NetworkObject : MonoBehaviour
 
     public virtual int Deserialize(Buffer packet)
     {
+
+        Debug.Log(packet.ReadSingleBE(5));
+
         networkID = packet.ReadUInt8(0);
 
         float px = packet.ReadSingleBE(1);
@@ -48,9 +51,10 @@ public class NetworkObject : MonoBehaviour
         float sy = packet.ReadSingleBE(29);
         float sz = packet.ReadSingleBE(33);
 
-        //Debug.Log(new Vector3(px, py, pz));
+        
 
         transform.position = new Vector3(px, py, pz);
+        //Debug.Log(transform.position);
         transform.rotation = Quaternion.Euler(rx, ry, rz);
         //transform.localScale = new Vector3(sx, sy, sz);
 

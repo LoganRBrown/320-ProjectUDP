@@ -166,14 +166,9 @@ exports.Server = class Server{
 		packet.write("PLAY", 0);
 		this.SendPacketToAll(packet);
 
-		var timer = 30;
+		//setTimeout(function(){
 
-		while(timer > 0){  //basically make the server wait 30seconds before it spawns stuff;
-			console.log(timer);		
-			timer -= 1*this.game.dt;
-		}
-
-		for(let c in this.clients){
+			for(let c in this.clients){
 			this.clients[c].spawnPawn(this.game);
 
 			const packet2 = Buffer.alloc(5);
@@ -183,9 +178,12 @@ exports.Server = class Server{
 		}
 
 
-		game.spawnBricks();
+		//this.game.spawnBricks();
 
-		game.spawnBall();
+		//this.game.spawnBall();
+
+		//}, 3000);
+
 
 	}
 	update(game){
