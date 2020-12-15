@@ -29,7 +29,6 @@ exports.Client = class Client {
 		this.pawn = new Pawn();
 		this.pawn.belongsToPlayer = this.clientNumber;
 		game.spawnObject( this.pawn );
-		console.log("Paddle Should Spawn Now");
 
 	}
 	

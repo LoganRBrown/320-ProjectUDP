@@ -48,9 +48,11 @@ public class NetworkObject : MonoBehaviour
         float sy = packet.ReadSingleBE(29);
         float sz = packet.ReadSingleBE(33);
 
+        //Debug.Log(new Vector3(px, py, pz));
+
         transform.position = new Vector3(px, py, pz);
         transform.rotation = Quaternion.Euler(rx, ry, rz);
-        transform.localScale = new Vector3(sx, sy, sz);
+        //transform.localScale = new Vector3(sx, sy, sz);
 
 
         return 37;

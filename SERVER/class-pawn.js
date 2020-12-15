@@ -11,6 +11,7 @@ exports.Pawn = class Pawn extends NetworkObject {
 		this.input = {};
 		this.width = 30;
 		this.height = 5;
+		this.position.y = -500;
 	}
 	accelerate(vel, acc, dt){
 		if(acc){

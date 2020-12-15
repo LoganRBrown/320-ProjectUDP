@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +9,7 @@ public class Player : NetworkObject
 
     public bool canPlayerControl = false;
 
-    Vector2 velocity = new Vector2();
+    Vector2 velocity = new Vector2(1,1);
 
     public float rightBoardEdge;
     public float leftBoardEdge;
@@ -65,6 +65,6 @@ public class Player : NetworkObject
 	}
 	public override int Deserialize(Buffer packet)
 	{
-		return base.Deserialize(packet);
+		return base.Deserialize(packet); 
 	}
 }

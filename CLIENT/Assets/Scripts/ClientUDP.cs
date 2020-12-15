@@ -36,12 +36,13 @@ public class ClientUDP : MonoBehaviour
 		if (singleton != null)
 		{
 			//alread have a clientUDP...
-			Destroy(gameObject);
+			//Destroy(gameObject);
 		}
 		else
 		{
 			singleton = this;
 			DontDestroyOnLoad(gameObject);
+			DontDestroyOnLoad(paddle);
 			ListenForPackets();
 		}
 	}
@@ -206,6 +207,18 @@ public class ClientUDP : MonoBehaviour
 
 					NetworkObject obj = ObjectRegistry.SpawnFrom(classID);
 
+					switch (classID)
+					{
+
+						case ("PAWN"):
+
+							obj.gameObject.transform.localScale = new Vector3(20,5,1);
+							//obj.gameObject.transform.localPosition = new Vector3(0, -500, 0);
+
+							break;
+
+					}
+
 					if (obj == null) return; //ERROR: class ID not Found!
 
 					offset += 4; // trim out classID off beginning of packet data
@@ -213,7 +226,6 @@ public class ClientUDP : MonoBehaviour
 					offset += obj.Deserialize(chunk);
 
 					NetworkObject.AddObject(obj);
-					print("fire");
 					break;
 				case 2: // update
 
@@ -228,7 +240,8 @@ public class ClientUDP : MonoBehaviour
 					if (obj2 == null) return;
 
 					offset += 4; // trim out classID off beginning of packet data
-					obj2.Deserialize(packet.Slice(offset));
+					//Debug.Log(packet.Slice(offset));
+					offset += obj2.Deserialize(packet.Slice(offset));
 
 					//update it
 

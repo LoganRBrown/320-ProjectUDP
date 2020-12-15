@@ -20,6 +20,8 @@ exports.Game = class Game {
 
 		this.bricks = [];
 
+		this.ball = new Ball();
+
 		this.server = server;
 		this.update();
 		//this.populateGame();
@@ -65,19 +67,34 @@ exports.Game = class Game {
 	}
 	spawnBricks(){
 
+		const offsetY = 1;
+		const offsetX = 2;
+
 		if(this.bricks.length >= 29) return;
 
 		let brickClone = new Brick();
-		for (var i = 0; i <= 28; i++) {
-			this.spawnObject( this.brickClone );
+		for (var i = 1; i <= 30; i++) {
+			var bc = this.brickClone;
+
+			bc.position = {x:50,y:480,z:0};
+
+			if(i >= 1){
+				bc.position = {x:50,y:480,z:0};
+				bc.position += {x:offsetX * i, y:offsetY * i, z: 0};
+			}
+
+			this.spawnObject(bc);
 			this.bricks.push(brickClone);
 		}
+	}
+	spawnBall(){
+		this.spawnObject(this.ball);
 	}
 	makeREPL(isUpdate){
 
 		isUpdate = !!isUpdate;
 
-		let packet = Buffer.alloc(20);
+		let packet = Buffer.alloc(5);
 		packet.write("REPL", 0);
 		packet.writeUint8( isUpdate ? 2 : 1, 4);
 
@@ -87,6 +104,7 @@ exports.Game = class Game {
 
 			const classID = Buffer.from(o.classID);
 			const data = o.serialize();
+			//console.log(data);
 
 			packet = Buffer.concat([packet, classID, data]);
 

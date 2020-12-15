@@ -5,7 +5,8 @@ exports.Server = class Server{
 	constructor(){
 
 		this.clients = [];
-		this.readyCount = 0;
+		this.readyCount = 1;
+		this.doOnce = true;
 		this.serverName = "Logan's Server";
 
 		//create socket:
@@ -159,6 +160,34 @@ exports.Server = class Server{
 
 		this.broadcastPacket(packet);
 	}
+	beginPlay(){
+
+		const packet = Buffer.alloc(4);
+		packet.write("PLAY", 0);
+		this.SendPacketToAll(packet);
+
+		var timer = 30;
+
+		while(timer > 0){  //basically make the server wait 30seconds before it spawns stuff;
+			console.log(timer);		
+			timer -= 1*this.game.dt;
+		}
+
+		for(let c in this.clients){
+			this.clients[c].spawnPawn(this.game);
+
+			const packet2 = Buffer.alloc(5);
+			packet2.write("PAWN", 0);
+			packet2.writeUInt8(this.clients[c].pawn.networkID, 4);
+			this.sendPacketToClient(packet2, this.clients[c]);
+		}
+
+
+		game.spawnBricks();
+
+		game.spawnBall();
+
+	}
 	update(game){
 		//check clients for disconnects, etc.
 
@@ -166,10 +195,9 @@ exports.Server = class Server{
 			this.clients[key].update(game);
 			if(this.clients[key].isReady == true){
 				this.readyCount++;
-				if(this.readyCount >= 2){
-					const packet = Buffer.alloc(4);
-					packet.write("PLAY", 0);
-					this.SendPacketToAll(packet);
+				if(this.readyCount >= 2 && this.doOnce){
+					this.beginPlay();
+					this.doOnce = false;
 				}
 			}
 
