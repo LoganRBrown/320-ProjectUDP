@@ -16,6 +16,29 @@ INPT - Current state of the client's input from the player
 	0	4	ascii		"INPT"
 	4	1	int8		direction of horizontal input
 
+REDY - Indicates that the player has readied up in the client
+
+	0	L	Datatype	Desc
+	===============================
+	0	4	ascii		"REDY"
+	4	1	uint8		1 = player is ready
+
+USRN - Sent when the player wishes to change usernames
+
+	0	L	Datatype	Desc
+	===============================
+	0	4	ascii		"USRN"
+	4	1	uint8		username length
+	5	?	ascii		Username
+
+CHAT - Sent when the player wishes to send a chat message to other players
+
+	0	L	Datatype	Desc
+	===============================
+	0	4	ascii		"USRN"
+	4	1	uint8		message length
+	5	?	ascii		Message
+
 Packets from server
 ===================
 
@@ -40,3 +63,28 @@ PAWN - Sent to client to indicate which pawn they control
 	===============================
 	0	4	ascii		"PAWN"
 	4	1	uint8		NetworkID
+
+HOST - Sent to client to display avaiable servers.
+
+	O	L	Datatype	Desc
+	===============================
+	0	4	ascii		"HOST"
+	4	2	uint16		Port
+	6	1	uint8		Server Name Length
+	7	?	string		Server Name
+
+CHAT - Sent to client to display chat messages sent by other players
+
+	O	L	Datatype	Desc
+	===============================
+	0	4	ascii		"CHAT"
+	4	1	uint8		Username Length
+	5	2	uint16		Message Length
+	7	?	ascii		Username
+	?	?	ascii		Message
+
+PLAY - Sent to client to let the game know everyone has readied and that it is time to play.
+
+	O	L	Datatype	Desc
+	===============================
+	0	4	ascii		"PLAY"
