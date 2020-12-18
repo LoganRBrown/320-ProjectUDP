@@ -5,7 +5,7 @@ const Brick = require("./class-brick.js").Brick;
 
 exports.Client = class Client {
 
-	static TIMEOUT = 8;
+	static TIMEOUT = 800;
 
 	constructor(rinfo){
 		this.rinfo = rinfo;

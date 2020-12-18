@@ -35,7 +35,7 @@ public class NetworkObject : MonoBehaviour
     public virtual int Deserialize(Buffer packet)
     {
 
-        Debug.Log(packet.ReadSingleBE(5));
+        //Debug.Log(packet.ReadSingleBE(5));
 
         networkID = packet.ReadUInt8(0);
 

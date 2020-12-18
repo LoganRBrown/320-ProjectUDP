@@ -240,7 +240,7 @@ public class ClientUDP : MonoBehaviour
 					if (obj2 == null) return;
 
 					offset += 4; // trim out classID off beginning of packet data
-					//Debug.Log(packet.Slice(offset));
+					Debug.Log(packet.ReadSingleBE(14));
 					offset += obj2.Deserialize(packet.Slice(offset));
 
 					//update it

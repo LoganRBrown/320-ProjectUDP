@@ -12,7 +12,7 @@ exports.Pawn = class Pawn extends NetworkObject {
 		this.input = {};
 		this.width = 30;
 		this.height = 5;
-		this.position.y = -50;
+		this.position.y = -4;
 	}
 	accelerate(vel, acc, dt){
 		if(acc){
@@ -57,7 +57,7 @@ exports.Pawn = class Pawn extends NetworkObject {
 
 		let b = super.serialize();
 
-		console.log(b);
+		//console.log(b);
 
 		return b;
 	}

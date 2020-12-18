@@ -110,7 +110,7 @@ exports.Server = class Server{
 
 		const key = this.getKeyFromRinfo(client.rinfo);
 
-		delete this.client[key];
+		delete this.clients[key];
 
 		
 	}
@@ -178,7 +178,7 @@ exports.Server = class Server{
 		}
 
 
-		//this.game.spawnBricks();
+		this.game.spawnBricks();
 
 		//this.game.spawnBall();
 
